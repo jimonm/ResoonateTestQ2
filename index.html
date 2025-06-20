@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Information</title>
+    <!-- Google Fonts - Inter for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Inline CSS for styling the application -->
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-gradient-start: #1a202c; /* gray-900 */
+            --bg-gradient-mid: #4a0e6e;   /* purple-900 */
+            --bg-gradient-end: #4b0082;   /* indigo-900 */
+            --text-primary: #c084fc;      /* purple-200 */
+            --text-secondary: #d8b4fe;    /* purple-300 */
+            --text-tertiary: #a78bfa;     /* purple-500 */
+            --accent-teal: #2dd4bf;       /* teal-400 */
+            --accent-blue: #60a5fa;       /* blue-400 */
+            --card-bg: #1f2937;           /* gray-800 */
+            --card-border: #6d28d9;       /* purple-700 */
+            --search-bg: #1f2937;         /* gray-800 */
+            --search-text: #5eead4;       /* teal-300 */
+            --search-placeholder: #0d9488;/* teal-600 */
+            --search-border: #0f766e;     /* teal-700 */
+            --button-bg: #6d28d9;         /* purple-700 */
+            --button-text: #2dd4bf;       /* teal-400 */
+            --back-to-top-bg: #047857;    /* teal-600 */
+            --back-to-top-hover-bg: #0f766e; /* teal-700 */
+            --error-bg: #7f1d1d;          /* red-900 */
+            --error-text: #fca5a5;        /* red-300 */
+            --shadow-primary: rgba(0, 0, 0, 0.1);
+            --shadow-secondary: rgba(0, 0, 0, 0.06);
+            --shadow-accent-teal: rgba(45, 212, 191, 0.5);
+            --shadow-accent-blue-light: rgba(74, 144, 255, 0.7);
+            --shadow-accent-blue-dark: rgba(74, 144, 255, 0.5);
+            --cloud-background: none; /* Default to no clouds in dark mode */
+            --cloud-background-size: auto;
+        }
+
+        /* Light Mode Variables */
+        html.light-mode {
+            --bg-gradient-start: #e0e7ff; /* light blue */
+            --bg-gradient-mid: #c7d2fe;   /* light indigo */
+            --bg-gradient-end: #f0f4ff;   /* very light blue */
+            --text-primary: #333;
+            --text-secondary: #555;
+            --text-tertiary: #777;
+            --accent-teal: #1d4ed8;       /* blue-700 for better contrast in light mode */
+            --accent-blue: #2563eb;       /* blue-600 */
+            --card-bg: #fff;
+            --card-border: #a78bfa;       /* purple-500 */
+            --search-bg: #f3f4f6;         /* gray-100 */
+            --search-text: #333;
+            --search-placeholder: #6b7280;/* gray-500 */
+            --search-border: #9ca3af;     /* gray-400 */
+            --button-bg: #a78bfa;         /* purple-500 */
+            --button-text: #fff;
+            --back-to-top-bg: #0891b2;    /* cyan-600 */
+            --back-to-top-hover-bg: #06748d; /* cyan-700 */
+            --error-bg: #ef4444;          /* red-500 */
+            --error-text: #fee2e2;        /* red-100 */
+            --shadow-primary: rgba(0, 0, 0, 0.1);
+            --shadow-secondary: rgba(0, 0, 0, 0.05);
+            --shadow-accent-teal: transparent; /* Removed shadow for light mode title/names */
+            --shadow-accent-blue-light: rgba(37, 99, 235, 0.7);
+            --shadow-accent-blue-dark: rgba(37, 99, 235, 0.5);
+            /* Cloud background for light mode - bigger and fewer */
+            --cloud-background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150"><path fill="%23dce7f7" d="M75 50c-16.569 0-30 13.431-30 30s13.431 30 30 30c16.569 0 30-13.431 30-30S91.569 50 75 50zm-30 0c-13.255 0-24 10.745-24 24s10.745 24 24 24c13.255 0 24-10.745 24-24S58.255 50 45 50zm90 0c-13.255 0-24 10.745-24 24s10.745 24 24 24c13.255 0 24-10.745 24-24S148.255 50 135 50zm-30 20c-8.837 0-16 7.163-16 16s7.163 16 16 16c8.837 0 16-7.163 16-16S113.837 70 105 70z"/></svg>');
+            --cloud-background-size: 400px 200px; /* Increased size for bigger, fewer clouds */
+        }
+
+
+        /* General Body and HTML styles */
+        html {
+            transition: background-color 0.5s ease; /* Smooth transition for dark mode */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif; /* Fallback to sans-serif if Inter is not available */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Base App Container */
+        .app-container {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+            background-image: var(--cloud-background), linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+            background-size: var(--cloud-background-size), 100% 100%; /* Size of the cloud pattern, and then the gradient */
+            background-repeat: repeat;
+            color: var(--text-primary);
+            padding: 1rem;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Responsive padding for app container */
+        @media (min-width: 640px) {
+            .app-container {
+                padding: 1.5rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .app-container {
+                padding: 2rem;
+            }
+        }
+
+        /* Loading and Error States */
+        .loading-container,
+        .error-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .loading-container {
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+            color: var(--text-secondary);
+        }
+
+        .loading-text {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* animate-pulse */
+            text-shadow: 0 0 8px var(--shadow-accent-teal); /* text-shadow-glow */
+        }
+
+        .error-container {
+            background-color: var(--error-bg);
+            color: var(--error-text);
+        }
+
+        .error-text {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            text-shadow: 0 0 8px var(--error-text); /* text-shadow-glow */
+        }
+
+        /* Header Section */
+        .app-header {
+            text-align: center;
+            margin-bottom: 2.5rem; /* mb-10 */
+            position: relative;
+        }
+
+        .app-title {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 800; /* font-extrabold */
+            color: var(--accent-teal);
+            margin-bottom: 1rem; /* mb-4 */
+            text-shadow: 0 0 8px var(--shadow-accent-teal); /* drop-shadow-lg and [text-shadow] */
+            display: flex; /* Make it a flex container to align icon and text */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-icon {
+            margin-right: 0.75rem; /* mr-2 */
+            color: var(--accent-teal); /* Ensure icon color matches title */
+            height: 2.5rem; /* Adjust size for title */
+            width: 2.5rem; /* Adjust size for title */
+            min-width: 24px; /* Ensure icon doesn't shrink too much */
+            min-height: 24px;
+        }
+
+        .app-subtitle {
+            font-size: 1.25rem; /* text-xl */
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            box-shadow: 0 4px 6px -1px var(--shadow-primary), 0 2px 4px -1px var(--shadow-secondary); /* shadow-lg */
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* hover:scale-110 transition-transform duration-300 */
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .dark-mode-toggle:focus {
+            outline: 2px solid var(--accent-teal); /* focus:outline-none focus:ring-2 focus:ring-teal-500 */
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px var(--shadow-accent-teal); /* focus:ring-opacity-75 */
+        }
+
+        .dark-mode-icon { /* Renamed from .dark-mode-toggle svg for clarity */
+            height: 1.5rem; /* h-6 */
+            width: 1.5rem; /* w-6 */
+        }
+
+        /* Search Controls Container */
+        .search-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 28rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 640px) {
+            .search-controls {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        /* Search Input */
+        .search-input {
+            flex-grow: 1; /* Allows it to take available space */
+            padding: 0.75rem; /* p-3 */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 4px 6px -1px var(--shadow-primary), 0 2px 4px -1px var(--shadow-secondary); /* shadow-lg */
+            outline: none;
+            border: 1px solid var(--search-border);
+            background-color: var(--search-bg);
+            color: var(--search-text);
+            font-size: 1rem;
+            transition: all 0.3s ease; /* transition-all duration-300 */
+        }
+
+        .search-input::placeholder {
+            color: var(--search-placeholder);
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--accent-teal); /* focus:ring-2 focus:ring-teal-500 */
+            outline-offset: 2px;
+        }
+
+        /* Search Category Dropdown */
+        .search-category-select {
+            padding: 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid var(--search-border);
+            background-color: var(--search-bg);
+            color: var(--search-text);
+            font-size: 1rem;
+            box-shadow: 0 4px 6px -1px var(--shadow-primary), 0 2px 4px -1px var(--shadow-secondary);
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none; /* Remove default dropdown arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="%232dd4bf"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem; /* Make space for custom arrow */
+        }
+
+        .search-category-select:focus {
+            outline: 2px solid var(--accent-teal);
+            outline-offset: 2px;
+        }
+
+        /* Contacts Grid */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 1.5rem; /* gap-6 */
+            margin-top: 2.5rem; /* Space after search controls */
+        }
+
+        @media (min-width: 640px) {
+            .contacts-grid {
+                grid-template-columns: repeat(2, 1fr); /* sm:grid-cols-2 */
+            }
+        }
+
+        @media (min-width: 768px) {
+            .contacts-grid {
+                grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .contacts-grid {
+                grid-template-columns: repeat(4, 1fr); /* lg:grid-cols-4 */
+            }
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px var(--shadow-primary), 0 2px 4px -1px var(--shadow-secondary); /* shadow-lg */
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease; /* transition-all duration-300 */
+            transform-style: preserve-3d; /* perspective-1000 */
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 0 20px var(--shadow-accent-blue-light), 0 0 30px var(--shadow-accent-blue-dark); /* hover:shadow-xl-glow */
+            transform: scale(1.05) rotateY(3deg) rotateX(1deg); /* hover:scale-105 hover:rotateY-3 hover:rotateX-1 */
+            border-color: var(--accent-teal); /* hover:border-teal-500 */
+        }
+
+        .contact-card-content {
+            padding: 1.5rem; /* p-6 */
+        }
+
+        .contact-name {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: var(--accent-teal);
+            margin-bottom: 0.5rem; /* mb-2 */
+            text-shadow: 0 0 5px var(--shadow-accent-teal); /* [text-shadow] shadow-teal-300/50 */
+        }
+
+        .contact-detail {
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem; /* mb-1 */
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-email {
+            color: var(--text-primary); /* Adjusted for better visibility in both modes */
+            font-size: 0.875rem; /* text-sm */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        .icon {
+            height: 1.25rem; /* h-5 */
+            width: 1.25rem; /* w-5 */
+            color: var(--text-tertiary);
+            margin-right: 0.5rem; /* mr-2 */
+        }
+
+        .contact-username {
+            font-weight: 600; /* font-semibold */
+            color: var(--text-primary);
+        }
+
+        .contact-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+            color: var(--accent-blue); /* Slightly darker hover for consistency */
+        }
+
+        /* Contact Info Section */
+        .contact-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem; /* space-y-3 */
+            color: var(--text-secondary);
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .address-item {
+            align-items: flex-start; /* For multi-line address */
+        }
+
+        .contact-address {
+            font-style: normal; /* not-italic */
+        }
+
+        .company-info {
+            align-items: flex-start;
+        }
+
+        .company-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-name {
+            font-weight: 600; /* font-semibold */
+        }
+
+        .company-catchphrase {
+            font-size: 0.75rem; /* text-xs */
+            color: var(--text-primary); /* Adjusted for consistency */
+        }
+
+        /* No Contacts Found Message */
+        .no-contacts-message {
+            grid-column: 1 / -1; /* col-span-full */
+            text-align: center;
+            font-size: 1.25rem; /* text-xl */
+            color: var(--text-primary);
+        }
+
+        /* Back to Top Button */
+        .back-to-top-button {
+            position: fixed;
+            bottom: 1rem; /* bottom-4 */
+            right: 1rem; /* right-4 */
+            padding: 0.75rem; /* p-3 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: var(--back-to-top-bg);
+            color: #fff; /* white */
+            box-shadow: 0 4px 6px -1px var(--shadow-primary), 0 2px 4px -1px var(--shadow-secondary); /* shadow-lg */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease; /* transition-all duration-300 */
+            outline: none;
+            z-index: 1000; /* Ensure button is on top */
+        }
+
+        .back-to-top-button:hover {
+            background-color: var(--back-to-top-hover-bg);
+        }
+
+        .back-to-top-button:focus {
+            outline: 2px solid var(--accent-teal); /* focus:outline-none focus:ring-2 focus:ring-teal-500 */
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px var(--shadow-accent-teal); /* focus:ring-opacity-75 */
+        }
+
+        .back-to-top-icon { /* Renamed from .back-to-top-button svg for clarity */
+            height: 1.5rem; /* h-6 */
+            width: 1.5rem; /* w-6 */
+        }
+
+        /* Footer */
+        .app-footer {
+            text-align: center;
+            margin-top: 3rem; /* mt-12 */
+            color: var(--text-primary);
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        .footer-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Keyframe for pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- React and ReactDOM CDN imports -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX transformation in browser (for development, not production) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Main App component
+        const App = () => {
+            const [contacts, setContacts] = React.useState([]); // State to store contact data
+            const [loading, setLoading] = React.useState(true); // State to manage loading status
+            const [error, setError] = React.useState(null); // State to manage error status
+            const [searchTerm, setSearchTerm] = React.useState(''); // State for search input
+            const [searchCategory, setSearchCategory] = React.useState('all'); // New state for search category
+            const [isDarkMode, setIsDarkMode] = React.useState(() => {
+                // Initialize dark mode from local storage or system preference
+                const savedMode = localStorage.getItem('isDarkMode');
+                // Default to dark mode if no preference is saved or system prefers dark
+                return savedMode ? JSON.parse(savedMode) : window.matchMedia('(prefers-color-scheme: dark)').matches;
+            });
+            const [showBackToTop, setShowBackToTop] = React.useState(false); // State to control back to top button visibility
+
+            // Effect hook to fetch data when the component mounts
+            React.useEffect(() => {
+                const fetchContacts = async () => {
+                    try {
+                        const response = await fetch('https://jsonplaceholder.typicode.com/users'); // Fetch user data
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`); // Handle HTTP errors
+                        }
+                        const data = await response.json(); // Parse JSON response
+                        setContacts(data); // Set contacts state
+                    } catch (err) {
+                        setError(err); // Set error state if fetching fails
+                    } finally {
+                        setLoading(false); // Set loading to false regardless of success or failure
+                    }
+                };
+
+                fetchContacts(); // Call the fetch function
+            }, []); // Empty dependency array means this effect runs once on mount
+
+            // Effect hook to apply theme class to html element and save preference
+            React.useEffect(() => {
+                if (isDarkMode) {
+                    document.documentElement.classList.remove('light-mode');
+                } else {
+                    document.documentElement.classList.add('light-mode');
+                }
+                localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+            }, [isDarkMode]);
+
+            // Effect hook to handle scroll for back to top button visibility
+            React.useEffect(() => {
+                const handleScroll = () => {
+                    if (window.scrollY > 200) {
+                        setShowBackToTop(true);
+                    } else {
+                        setShowBackToTop(false);
+                    }
+                };
+                window.addEventListener('scroll', handleScroll);
+                // Cleanup the event listener when the component unmounts
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []); // Empty dependency array means this effect runs once on mount
+
+            // Filter contacts based on search term and category
+            const filteredContacts = contacts.filter((contact) => {
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+                // Helper to check if a string includes the search term
+                const includesSearchTerm = (text) => text && text.toLowerCase().includes(lowerCaseSearchTerm);
+
+                switch (searchCategory) {
+                    case 'name':
+                        return includesSearchTerm(contact.name);
+                    case 'username':
+                        return includesSearchTerm(contact.username);
+                    case 'email':
+                        return includesSearchTerm(contact.email);
+                    case 'phone':
+                        // Only check the phone number part before space
+                        return contact.phone && contact.phone.split(' ')[0].toLowerCase().includes(lowerCaseSearchTerm);
+                    case 'address':
+                        // Concatenate address parts for search
+                        const fullAddress = `${contact.address.street || ''} ${contact.address.suite || ''} ${contact.address.city || ''} ${contact.address.zipcode || ''}`;
+                        return includesSearchTerm(fullAddress);
+                    case 'company':
+                        // Concatenate company name and catch phrase
+                        const fullCompany = `${contact.company.name || ''} ${contact.company.catchPhrase || ''}`;
+                        return includesSearchTerm(fullCompany);
+                    case 'all':
+                    default:
+                        // Original 'all fields' search logic, ensuring properties exist before accessing
+                        return (
+                            includesSearchTerm(contact.name) ||
+                            includesSearchTerm(contact.username) ||
+                            includesSearchTerm(contact.email) ||
+                            (contact.phone && includesSearchTerm(contact.phone.split(' ')[0])) || // Check for phone number without space
+                            (contact.address && includesSearchTerm(`${contact.address.street || ''} ${contact.address.suite || ''} ${contact.address.city || ''} ${contact.address.zipcode || ''}`)) ||
+                            (contact.company && includesSearchTerm(`${contact.company.name || ''} ${contact.company.catchPhrase || ''}`))
+                        );
+                }
+            });
+
+            // Toggle dark mode
+            const toggleDarkMode = () => {
+                setIsDarkMode((prevMode) => !prevMode);
+            };
+
+            // Display loading message while data is being fetched
+            if (loading) {
+                return (
+                    <div className="loading-container">
+                        <p className="loading-text">Loading contacts...</p>
+                    </div>
+                );
+            }
+
+            // Display error message if data fetching failed
+            if (error) {
+                return (
+                    <div className="error-container">
+                        <p className="error-text">Error: {error.message}</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="app-container">
+                    {/* Header section */}
+                    <header className="app-header">
+                        <h1 className="app-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="app-icon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Contact Information
+                        </h1>
+                        <p className="app-subtitle">
+                            Your complete and organized address book.
+                        </p>
+
+                        {/* Theme Toggle Button */}
+                        <button
+                            onClick={toggleDarkMode}
+                            className="dark-mode-toggle"
+                            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                        >
+                            {isDarkMode ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="dark-mode-icon"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                                </svg>
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="dark-mode-icon"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 001.06 1.06l1.591-1.59zM12 18.75a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25a.75.75 0 01.75-.75zM4.707 9.293a.75.75 0 00-1.06-1.06L2.05 9.894a.75.75 0 001.06 1.06l1.59-1.59zM19.5 12a.75.75 0 00-.75-.75h-2.25a.75.75 0 000 1.5h2.25a.75.75 0 00.75-.75zM6 12a.75.75 0 00-.75-.75H3a.75.75 0 000 1.5h2.25A.75.75 0 006 12zm1.05-5.94a.75.75 0 00-1.06-1.06l-1.59 1.59a.75.75 0 001.06 1.06l1.59-1.59zm8.894 9.456a.75.75 0 10-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.06l1.591-1.59z" />
+                                </svg>
+                            )}
+                        </button>
+
+                        {/* Search Controls */}
+                        <div className="search-controls">
+                            <input
+                                type="text"
+                                placeholder="Search contacts..."
+                                className="search-input"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <select
+                                className="search-category-select"
+                                value={searchCategory}
+                                onChange={(e) => setSearchCategory(e.target.value)}
+                            >
+                                <option value="all">Search All</option> {/* Placeholder/title for dropdown */}
+                                <option value="name">Name</option>
+                                <option value="username">Username</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Phone</option>
+                                <option value="address">Address</option>
+                                <option value="company">Company</option>
+                            </select>
+                        </div>
+                    </header>
+
+                    {/* Contacts grid */}
+                    <div className="contacts-grid">
+                        {filteredContacts.length > 0 ? (
+                            filteredContacts.map((contact) => (
+                                <div
+                                    key={contact.id} // Unique key for each contact
+                                    className="contact-card"
+                                >
+                                    <div className="contact-card-content">
+                                        {/* Contact Name */}
+                                        <h2 className="contact-name">
+                                            {contact.name}
+                                        </h2>
+                                        {/* Username and Email */}
+                                        <p className="contact-detail">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="icon"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <span className="contact-username">
+                                                @{contact.username}
+                                            </span>
+                                        </p>
+                                        <p className="contact-detail contact-email">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="icon"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                            </svg>
+                                            <a
+                                                href={`mailto:${contact.email}`}
+                                                className="contact-link"
+                                            >
+                                                {contact.email}
+                                            </a>
+                                        </p>
+
+                                        {/* Contact Details */}
+                                        <div className="contact-info-section">
+                                            <div className="contact-info-item">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="icon"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <span>{contact.phone.split(' ')[0]}</span>{' '}
+                                            </div>
+                                            <div className="contact-info-item address-item">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="icon"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <address className="contact-address">
+                                                    {contact.address.street}, {contact.address.suite}, <br />
+                                                    {contact.address.city}, {contact.address.zipcode}
+                                                </address>
+                                            </div>
+                                            <div className="contact-info-item">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="icon"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <a
+                                                    href={`http://${contact.website}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="contact-link"
+                                                >
+                                                    {contact.website}
+                                                </a>
+                                            </div>
+                                            <div className="contact-info-item company-info">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="icon"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M4 4a2 2 0 012-2h4a2 2 0 012 2v2h4a2 2 0 012 2v4a2 2 0 01-2 2h-2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4H2a2 2 0 01-2-2V8a2 2 0 012-2h2V4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <div className="company-details">
+                                                    <span className="company-name">{contact.company.name}</span>
+                                                    <span className="company-catchphrase">
+                                                        "{contact.company.catchPhrase}"
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="no-contacts-message">
+                                No contacts found for "{searchTerm}".
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Back to Top button */}
+                    {showBackToTop && (
+                        <button
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            className="back-to-top-button"
+                            aria-label="Back to top"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="back-to-top-icon"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v14" />
+                            </svg>
+                        </button>
+                    )}
+
+                    {/* Footer */}
+                    <footer className="app-footer">
+                        <p>&copy; {new Date().getFullYear()} Contact Information. All rights reserved.</p>
+                        <p>Data from <a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener noreferrer" className="footer-link">JSONPlaceholder</a></p>
+                        <p>Made by Jimon for Resonate Solutions Test</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        // Render the App component into the 'root' div
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
